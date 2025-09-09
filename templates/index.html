@@ -2,8 +2,8 @@
 
 {% block content %}
 <div class="row">
+    <!-- Sign In Form -->
     <div class="col-lg-5 col-md-12 mb-4">
-        <!-- Sign In Form -->
         <div class="card shadow p-4">
             <h2 class="mb-3">Sign In Visitor</h2>
             <form method="POST">
@@ -27,12 +27,12 @@
         </div>
     </div>
 
+    <!-- Visitor Log -->
     <div class="col-lg-7 col-md-12">
-        <!-- Visitor Log -->
         <div class="card shadow p-4">
             <h2 class="mb-3">Visitor Log</h2>
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table class="table table-striped table-hover">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -50,12 +50,24 @@
                             <td>{{ visitor.name }}</td>
                             <td>{{ visitor.host }}</td>
                             <td>{{ visitor.purpose }}</td>
-                            <td>{{ visitor.time_in }}</td>
-                            <td>{{ visitor.time_out or "-" }}</td>
-                            <td>{{ visitor.status }}</td>
+                            <td>{{ visitor.sign_in_time.strftime("%Y-%m-%d %H:%M:%S") }}</td>
                             <td>
-                                {% if visitor.status == "Signed In" %}
-                                    <a href="{{ url_for('sign_out', visitor_id=loop.index0) }}" class="btn btn-danger btn-sm">Sign Out</a>
+                                {% if visitor.sign_out_time %}
+                                    {{ visitor.sign_out_time.strftime("%Y-%m-%d %H:%M:%S") }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if visitor.sign_out_time %}
+                                    Signed Out
+                                {% else %}
+                                    Signed In
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if not visitor.sign_out_time %}
+                                    <a href="{{ url_for('sign_out', visitor_id=visitor.id) }}" class="btn btn-danger btn-sm">Sign Out</a>
                                 {% else %}
                                     <span class="text-muted">-</span>
                                 {% endif %}
