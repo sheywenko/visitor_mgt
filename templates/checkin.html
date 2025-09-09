@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<form method="POST">
+    <div class="mb-3">
+        <label>Name</label>
+        <input type="text" name="visitor_name" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label>Organization</label>
+        <input type="text" name="organization" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label>Person to Visit</label>
+        <input type="text" name="person_to_visit" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label>Purpose</label>
+        <input type="text" name="purpose" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label>Contact</label>
+        <input type="text" name="contact" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Check In</button>
+</form>
+{% endblock %}

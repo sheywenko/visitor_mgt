@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-5 col-md-12 mb-4">
+        <!-- Sign In Form -->
+        <div class="card shadow p-4">
+            <h2 class="mb-3">Sign In Visitor</h2>
+            <form method="POST">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Visitor Name</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="host" class="form-label">Person/Department to Visit</label>
+                    <input type="text" class="form-control" id="host" name="host" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="purpose" class="form-label">Purpose of Visit</label>
+                    <input type="text" class="form-control" id="purpose" name="purpose" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-7 col-md-12">
+        <!-- Visitor Log -->
+        <div class="card shadow p-4">
+            <h2 class="mb-3">Visitor Log</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Host</th>
+                            <th>Purpose</th>
+                            <th>Sign In</th>
+                            <th>Sign Out</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for visitor in visitors %}
+                        <tr>
+                            <td>{{ visitor.name }}</td>
+                            <td>{{ visitor.host }}</td>
+                            <td>{{ visitor.purpose }}</td>
+                            <td>{{ visitor.time_in }}</td>
+                            <td>{{ visitor.time_out or "-" }}</td>
+                            <td>{{ visitor.status }}</td>
+                            <td>
+                                {% if visitor.status == "Signed In" %}
+                                    <a href="{{ url_for('sign_out', visitor_id=loop.index0) }}" class="btn btn-danger btn-sm">Sign Out</a>
+                                {% else %}
+                                    <span class="text-muted">-</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

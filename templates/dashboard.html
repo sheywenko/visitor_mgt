@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<a href="{{ url_for('checkin') }}" class="btn btn-primary mb-3">New Check-In</a>
+<table class="table table-bordered">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Organization</th>
+        <th>Person to Visit</th>
+        <th>Purpose</th>
+        <th>Check-In</th>
+        <th>Check-Out</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+    {% for v in visitors %}
+    <tr>
+        <td>{{ v.id }}</td>
+        <td>{{ v.visitor_name }}</td>
+        <td>{{ v.organization }}</td>
+        <td>{{ v.person_to_visit }}</td>
+        <td>{{ v.purpose }}</td>
+        <td>{{ v.checkin_time }}</td>
+        <td>{{ v.checkout_time or "-" }}</td>
+        <td>{{ v.status }}</td>
+        <td>
+            {% if v.status == "IN" %}
+            <a href="{{ url_for('checkout', id=v.id) }}" class="btn btn-success btn-sm">Check-Out</a>
+            {% else %}
+            Checked Out
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
